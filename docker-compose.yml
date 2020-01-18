@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  elasticsearch:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:${ELK_VERSION}"
+    container_name: "elasticsearch_${ELK_VERSION}"
+    env_file: .env
+    environment: 
+      discovery.type: single-node
+    ports:
+     - "50200:9200" 
+     - "50300:9300"
+  kibana:
+    image: "docker.elastic.co/kibana/kibana:${ELK_VERSION}"
+    container_name: "kibana_${ELK_VERSION}"
+    env_file: .env
+    ports:
+     - "55601:5601"
+    depends_on:
+      - elasticsearch
